@@ -1,0 +1,4 @@
+development:
+	AWS_KEY_ID: "AKIAJ6ZIGNEJRCR2CWTA"
+	AWS_SECRET_ACCESS_KEY: "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"
+	AWS_BUCKET: "travelshopa-development"
