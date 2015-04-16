@@ -1,0 +1,8 @@
+// Clear message input
+$('#message').val('');
+$('<p></p>').html("me: " + "<%=  @message[:msg] %>").appendTo("#chat_room");
+
+// Send the message
+<% publish_to @channel, @message %>
+
+
