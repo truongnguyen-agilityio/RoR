@@ -1,0 +1,61 @@
+
+
+<div id='location_recorder'>
+  <div style="background-color: #eeeeee;border:1px solid #cccccc">
+
+    Time: <span id="time">00:00</span>
+
+  </div>
+  <div>
+    Status: <span id="status"></status>
+  </div>
+  <input type="button" id="record" value="Record" style="color:red">
+  <input type="button" id="play" value="Play" style="color:blue">
+  <input type="button" id="stop" value="Stop">
+  <input type="button" id="send" value="Send Data">
+
+</div>
+<script>
+  var locationRecorder = $('#location_recorder')[0]
+  $.jRecorder(
+    {
+      host: "<%= products_path %>?filename=audio.wav",
+      callback_started_recording: function(){callback_started(); },
+      callback_stopped_recording: function(){callback_stopped(); },
+      callback_activityLevel: function(level){callback_activityLevel(level); },
+      callback_activityTime: function(time){callback_activityTime(time);},
+      callback_finished_sending: function(time){ callback_finished_sending() },
+      swf_path : "<%= asset_path('jRecorder.swf') %>",
+    }, $(locationRecorder)
+  );
+
+  stop_recorder = function () {
+    $.jRecorder.stop();
+  }
+  $('#record').click(function(){
+    $.jRecorder.record(10); //record up to 30 sec and stops automatically
+  });
+
+  $('#stop').click(function(){
+    stop_recorder();
+  });
+
+  $('#play').click(function(){
+    console.log("playing...");
+    stop_recorder();
+  });
+  $('#send').click(function(){
+    $.jRecorder.sendData();
+  });
+
+  function callback_finished()
+  {
+    $('#status').html('Recording is finished');
+  }
+
+  //function callback
+  function callback_activityTime(time) {
+    $('#time').html(time);
+  }
+</script>
+
