@@ -1,13 +1,39 @@
 Rails.application.routes.draw do
+  namespace :api do
+  namespace :v1 do
+    get 'items/index'
+    end
+  end
+
+  namespace :api do
+  namespace :v1 do
+    get 'items/show'
+    end
+  end
+
+  namespace :api do
+  namespace :v1 do
+    put 'items/update'
+    end
+  end
+
+  namespace :api do
+  namespace :v1 do
+    delete 'items/destroy'
+    end
+  end
+
+  namespace :api do
+  namespace :v1 do
+    post 'items/create'
+    end
+  end
 
   devise_for :users
-  namespace :api, default: {format: :json} do
+
+  namespace :api do
     namespace :v1 do
-      resources :users
-      resources :projects
-    end
-    namespace :v2 do
-      resources :users
+      resources :items
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
