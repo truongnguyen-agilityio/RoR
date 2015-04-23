@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<strong>Audio:</strong><br>
+<audio controls>
+  <source src="<%= @user.audio.url %>" type="audio/wav">
+  Your browser does not support the audio tag.
+</audio>
+<br>
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

@@ -8,8 +8,9 @@ class ProductsController < ApplicationController
     @products = Product.all
   end
 
-   def get_file
-    puts "3333333", params.inspect
+  def add_audio
+    puts "read file", File.size("/assets/application.self-e80e8f2318043e8af94dddc2adad5a4f09739a8ebb323b3ab31cd71d45fd9113.css") 
+
   end
 
   # GET /products/1
@@ -74,6 +75,6 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:name, :price)
+      params.require(:product).permit(:name, :price, :image)
     end
 end
