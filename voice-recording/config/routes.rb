@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   post "/users/:id" => 'users#update'
-  resources :users
+  resources :users, expept: :put
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
