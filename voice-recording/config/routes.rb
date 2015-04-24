@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post "/users/:id" => 'users#update'
   resources :users
 
   devise_for :users

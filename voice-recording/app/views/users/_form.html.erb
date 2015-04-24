@@ -12,6 +12,9 @@
   <% end %>
 
   <div class="field">
+    <%= f.hidden_field :id %>
+  </div>
+  <div class="field">
     <%= f.label :email %><br>
     <%= f.text_field :email %>
   </div>
@@ -19,14 +22,13 @@
     <%= f.label :password %><br>
     <%= f.password_field :password %>
   </div>
-  <div name="user[audio]" id="user_audio">
-
+  <div name=  "user[audio]" id="user_audio">
+    <audio controls="">
+      <source src="<%= @user.audio.url %>" type="audio/wav">
+      Your browser does not support the audio tag.
+    </audio>
   </div>
- <!--  <div class="actions">
-    <%= f.submit %>
-  </div> -->
 <% end %>
-
 <div id="wrapper">
   <div>
     <button id="record"                       >Record</button >
@@ -38,74 +40,73 @@
   <span id="time">0:00</span>
 </div>
 
+
 <script>
   function timecode(ms) {
     var hms = {
-      h: Math.floor(ms/(60*60*1000)),
-      m: Math.floor((ms/60000) % 60),
-      s: Math.floor((ms/1000) % 60)
+      h: Math.floor(ms / (60 * 60 * 1000)),
+      m: Math.floor((ms / 60000) % 60),
+      s: Math.floor((ms / 1000) % 60)
     };
     var tc = []; // Timecode array to be joined with '.'
     if (hms.h > 0) {
       tc.push(hms.h);
     }
     tc.push((hms.m < 10 && hms.h > 0 ? "0" + hms.m : hms.m));
-    tc.push((hms.s < 10  ? "0" + hms.s : hms.s));
+    tc.push((hms.s < 10 ? "0" + hms.s : hms.s));
     return tc.join(':');
   }
 
 
   Recorder.initialize({
     swfSrc: "/system/users/audios/recorder.swf",
-    flashContainer: document.getElementById('user_audio')
+    // flashContainer: document.getElementById('user_audio')
   });
-  
-  $('#record').click(function () {
+  $('#record').click(function() {
     Recorder.record({
-      start: function(){
-      },
-      progress: function(milliseconds){
+      start: function() {},
+      progress: function(milliseconds) {
         document.getElementById("time").innerHTML = timecode(milliseconds);
       }
     });
   });
 
-  $('#play').click(function () {
+  $('#play').click(function() {
     Recorder.stop();
     Recorder.play({
-      progress: function(milliseconds){
+      progress: function(milliseconds) {
         document.getElementById("time").innerHTML = timecode(milliseconds);
       }
     });
   });
 
-  $('#stop').click(function () {
+  $('#stop').click(function() {
     Recorder.stop();
   });
 
-  $('#create-user').click(function () {
+  // create/update user
+  submit_func = function(method, path) {
+    var params = {
+      authenticity_token: $('[name="authenticity_token"]').val(),
+      email: $('#user_email').val(),
+      password: $('#user_password').val()
+    };
     Recorder.upload({
-      method: "POST"      ,
-      audioParam: "track[asset_data]",
-      url:        "/users",
+      method: method,
+      url: path,
       audioParam: "audio",
-      params: {
-        authenticity_token: $('[name="authenticity_token"]').val(),
-        email: $('#user_email').val(),
-        password: $('#user_password').val()
-      },
-      success: function(data){
+      params: params,
+      success: function(data) {
         data = JSON.parse(data);
-        console.log(data, data.success, data.id);
         if (data.success) {
           window.location.replace("/users/" + data.id);
         } else {
-          location.reload();
+          alert("your file was failed!");
         }
       },
-      error: function(){
+      error: function() {
         alert("your file was failed!");
       }
     });
-  });
+  };
 </script>

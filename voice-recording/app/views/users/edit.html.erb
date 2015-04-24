@@ -1,18 +1,19 @@
-<h1>New User</h1>
+<h1>Editing User</h1>
 
 <%= render 'form' %>
+
+<%= link_to 'Show', @user %> |
 <%= link_to 'Back', users_path %>
 
 <script>
 	var create_user = $('#create-user'),
-		new_user_path = "/users",
-		new_user_method = "POST";
+		new_user_path = "/users/" + $('#user_id').val(),
+		new_user_method = "PUT";
 
 	// change value for submit button
-	create_user.text("Create User")
+	create_user.text("Update User");
 
   create_user.click(function () {
   	submit_func(new_user_method, new_user_path);
   });
 </script>
-
