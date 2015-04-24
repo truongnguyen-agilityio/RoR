@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_attached_file :audio
+  has_attached_file :audio,
+  	:storage => :s3,
+		:bucket => 'travelshopa-development',
+		:s3_credentials => "#{Rails.root}/config/s3.yml"
 	validates_attachment_content_type :audio, :content_type => /.*/
 end
