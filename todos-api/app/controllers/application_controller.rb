@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
   		unless authenticate_by_header || authenticate_by_params
   			render json: {message: "Invalid auth_token"}, status: 401
   		end
-      puts "3333 auth_token", @auth_token
       @current_user = User.find_by_auth_token(@auth_token)
   	end
   	def authenticate_by_header

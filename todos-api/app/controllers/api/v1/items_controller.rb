@@ -4,6 +4,7 @@ class Api::V1::ItemsController < ApplicationController
 
   def index
     render json: @current_user.items, only: [:id, :name, :description, :completed], status: 200
+    # render json: @current_user.items, status: 200
   end
 
   def show
